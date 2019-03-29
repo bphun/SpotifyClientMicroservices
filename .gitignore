@@ -3,3 +3,5 @@
 ._*
 *.gradle
 *.vscode*
+
+services/authentication-service/src/main/resources/application.properties
