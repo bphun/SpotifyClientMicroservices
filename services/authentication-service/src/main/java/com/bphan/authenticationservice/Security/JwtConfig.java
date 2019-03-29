@@ -2,8 +2,8 @@ package com.bphan.authenticationservice.Security;
 
 import org.springframework.beans.factory.annotation.Value;
 
-public class JwtConfig1 {
-    @Value("${security.jwt.uri:/auth/**}")
+public class JwtConfig {
+    @Value("${security.jwt.uri:/authentication/**}")
     private String Uri;
 
     @Value("${security.jwt.header:Authorization}")
