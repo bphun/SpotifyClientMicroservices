@@ -4,4 +4,6 @@
 *.gradle
 *.vscode*
 
+*.class
+
 services/authentication-service/src/main/resources/application.properties
