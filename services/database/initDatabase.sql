@@ -17,5 +17,9 @@ INSERT INTO Users(id, user_role, username, password_hash) VALUES (@UserId2, 'ADM
 SELECT * FROM Users;
 
 use mysql;
-GRANT ALL ON *.* to root@'172.17.0.1' IDENTIFIED BY '1234';
+
+GRANT ALL ON *.* to root@'%' IDENTIFIED BY '1234';
+
+GRANT ALL ON *.* TO 'authDatabase'@'%' IDENTIFIED BY '1234';
+
 FLUSH PRIVILEGES;
