@@ -1,0 +1,80 @@
+version: "3"
+
+services:
+
+    service-discovery:
+        build: ./services/service-discovery
+        image: bphun/spotify-client-images:service-discovery
+        ports: 
+            - 8761:8761
+        container_name: service-discovery
+        networks:
+            - serviceNet
+
+    api-gateway:
+        build: ./services/api-gateway
+        image: bphun/spotify-client-images:api-gateway
+        ports:
+            - 9000:9000
+        container_name: api-gateway
+        depends_on: 
+            - service-discovery
+        networks:
+            - serviceNet
+
+    authentication-service:
+        build: ./services/authentication-service
+        image: bphun/spotify-client-images:authentication-service
+        ports:
+            - 8090:8090
+        container_name: authentication-service
+        depends_on: 
+            - service-discovery
+            - database
+        networks:
+            - serviceNet
+
+    database:
+        build: ./services/database
+        image: bphun/spotify-client-images:database
+        ports:
+            - 3306:3306
+        container_name: mysqldatabase
+        networks:
+            - serviceNet
+
+    movie-info-service:
+        build: ./services/movie-info-service
+        image: bphun/spotify-client-images:movie-info-service
+        ports:
+            - 8081:8081
+        container_name: movie-info-service
+        depends_on: 
+            - service-discovery
+        networks:
+            - serviceNet
+
+    movie-rating-service:
+        build: ./services/movie-rating-service
+        image: bphun/spotify-client-images:movie-rating-service
+        ports:
+            - 8082:8082
+        container_name: movie-rating-service
+        depends_on: 
+            - service-discovery
+        networks:
+            - serviceNet
+
+    movie-catalog-service:
+        build: ./services/movie-catalog-service
+        image: bphun/spotify-client-images:movie-catalog-service
+        ports:
+            - 8080:8080
+        container_name: movie-catalog-service
+        depends_on: 
+            - service-discovery
+        networks:
+            - serviceNet
+
+networks:
+    serviceNet:
