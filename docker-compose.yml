@@ -43,6 +43,7 @@ services:
         restart: on-failure
         links: 
             - config-service
+            - service-discovery
 
     authentication-service:
         build: ./services/authentication-service
@@ -62,6 +63,7 @@ services:
         links: 
             - config-service
             - mysqldatabase
+            - service-discovery
 
     mysqldatabase:
         build: ./services/database
@@ -88,6 +90,7 @@ services:
         restart: on-failure
         links: 
             - config-service
+            - service-discovery
 
     movie-rating-service:
         build: ./services/movie-rating-service
@@ -105,6 +108,7 @@ services:
         restart: on-failure
         links: 
             - config-service
+            - service-discovery
 
     movie-catalog-service:
         build: ./services/movie-catalog-service
@@ -122,6 +126,7 @@ services:
         restart: on-failure
         links: 
             - config-service
+            - service-discovery
 
 networks:
     serviceNet:
