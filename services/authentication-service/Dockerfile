@@ -6,6 +6,8 @@ WORKDIR /authentication-service
 
 COPY build/libs/authentication-service-0.0.1-SNAPSHOT.jar ./app.jar
 
+ENV DOCKER_CONFIG_PROFILE=docker
+
 EXPOSE 8090
 
 # ENTRYPOINT [ "gradle", "bootRun"]

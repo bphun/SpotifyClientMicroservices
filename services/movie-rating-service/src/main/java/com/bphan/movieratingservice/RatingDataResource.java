@@ -3,14 +3,12 @@ package com.bphan.movieratingservice;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/ratingsdata")
-@EnableEurekaClient
 public class RatingDataResource {
 
     @RequestMapping("/{movieId}")
