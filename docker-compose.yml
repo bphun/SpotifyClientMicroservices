@@ -2,14 +2,30 @@ version: "3"
 
 services:
 
+    config-service:
+        build: ./services/config-service
+        image: bphun/spotify-client-images:config-service
+        ports:
+            - 8888:8888
+        container_name: config-service
+        networks: 
+            - serviceNet 
+
     service-discovery:
         build: ./services/service-discovery
         image: bphun/spotify-client-images:service-discovery
         ports: 
             - 8761:8761
         container_name: service-discovery
+        depends_on: 
+            - config-service
+        environment: 
+            - DOCKER_CONFIG_PROFILE=docker
         networks:
             - serviceNet
+        restart: on-failure
+        links: 
+            - config-service
 
     api-gateway:
         build: ./services/api-gateway
@@ -19,8 +35,14 @@ services:
         container_name: api-gateway
         depends_on: 
             - service-discovery
+            - config-service
+        environment: 
+            - DOCKER_CONFIG_PROFILE=docker
         networks:
             - serviceNet
+        restart: on-failure
+        links: 
+            - config-service
 
     authentication-service:
         build: ./services/authentication-service
@@ -28,15 +50,22 @@ services:
         ports:
             - 8090:8090
         container_name: authentication-service
+        environment: 
+            - DOCKER_CONFIG_PROFILE=docker
         depends_on: 
             - service-discovery
-            - database
+            - config-service
+            - mysqldatabase
         networks:
             - serviceNet
+        restart: on-failure
+        links: 
+            - config-service
+            - mysqldatabase
 
-    database:
+    mysqldatabase:
         build: ./services/database
-        image: bphun/spotify-client-images:database
+        image: bphun/spotify-client-images:mysqldatabase
         ports:
             - 3306:3306
         container_name: mysqldatabase
@@ -49,10 +78,16 @@ services:
         ports:
             - 8081:8081
         container_name: movie-info-service
+        environment: 
+            - DOCKER_CONFIG_PROFILE=docker
         depends_on: 
             - service-discovery
+            - config-service
         networks:
             - serviceNet
+        restart: on-failure
+        links: 
+            - config-service
 
     movie-rating-service:
         build: ./services/movie-rating-service
@@ -60,10 +95,16 @@ services:
         ports:
             - 8082:8082
         container_name: movie-rating-service
+        environment: 
+            - DOCKER_CONFIG_PROFILE=docker
         depends_on: 
             - service-discovery
+            - config-service
         networks:
             - serviceNet
+        restart: on-failure
+        links: 
+            - config-service
 
     movie-catalog-service:
         build: ./services/movie-catalog-service
@@ -71,10 +112,16 @@ services:
         ports:
             - 8080:8080
         container_name: movie-catalog-service
+        environment: 
+            - DOCKER_CONFIG_PROFILE=docker
         depends_on: 
             - service-discovery
+            - config-service
         networks:
             - serviceNet
+        restart: on-failure
+        links: 
+            - config-service
 
 networks:
     serviceNet:
