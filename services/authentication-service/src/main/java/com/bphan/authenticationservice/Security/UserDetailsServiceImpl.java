@@ -25,16 +25,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.print("sdfasdfasdfsadfasdf");
 
-		AppUser appUser = userRepository.findUserWithName(username);
+		List<AppUser> appUsers = userRepository.findUserWithName(username);
 
-		if (appUser != null) {
-			appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
+		if (appUsers.size() >= 1 && appUsers.get(0) != null) {
+			appUsers.get(0).setPassword(passwordEncoder.encode(appUsers.get(0).getPassword()));
 
 			List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-					.commaSeparatedStringToAuthorityList("ROLE_" + appUser.getRole());
+					.commaSeparatedStringToAuthorityList("ROLE_" + appUsers.get(0).getRole());
 
-			return new User(appUser.getUsername(), appUser.getPassword(), grantedAuthorities);
+			return new User(appUsers.get(0).getUsername(), appUsers.get(0).getPassword(), grantedAuthorities);
 		}
 
 		throw new UsernameNotFoundException("Username: " + username + " not found");

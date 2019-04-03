@@ -31,10 +31,18 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
         .and()
         .exceptionHandling().authenticationEntryPoint(usernamePasswordAuthenticationFailureHandler())
         .and()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.POST, "/signup").permitAll()
+        .and()
         .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig))
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
-        .anyRequest().authenticated();
+        .anyRequest().authenticated()
+        .and()
+        .formLogin()
+        .loginPage("/login").permitAll()
+        .and()
+        .logout().permitAll();
     }
 
     @Override
