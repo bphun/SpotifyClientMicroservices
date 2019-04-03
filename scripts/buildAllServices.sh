@@ -7,7 +7,7 @@ NC='\033[0m'
 for service in $(ls services); 
 do
 
-    if [ "$service" = "database" ]; then
+    if [ "$service" = "database" ] || [ "$service" = "nginx" ]; then
         continue
     fi
 
