@@ -2,6 +2,31 @@ version: "3"
 
 services:
 
+    nginx:
+        build: ./services/nginx
+        image: bphun/spotify-client-images:nginx
+        ports:
+            - 80:80
+        container_name: nginx
+        networks: 
+            - serviceNet
+        depends_on: 
+            - config-service
+            - service-discovery
+            - api-gateway
+            - authentication-service
+            - movie-info-service
+            - movie-catalog-service
+            - movie-rating-service
+        links: 
+            - config-service
+            - service-discovery
+            - api-gateway
+            - authentication-service
+            - movie-info-service
+            - movie-catalog-service
+            - movie-rating-service
+
     config-service:
         build: ./services/config-service
         image: bphun/spotify-client-images:config-service
