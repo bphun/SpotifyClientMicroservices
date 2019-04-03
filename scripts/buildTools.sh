@@ -4,12 +4,11 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-args=''
-brief=''
+args='build -x test'
+brief='Build'
 services=()
 
 if [ "$1" = "-b" ] || [ "$1" = "--build" ]; then
-    args='build -x test'
     brief='Build'
 elif [ "$1" = "-c" ]|| [ "$1" = "--clean" ]; then
     args='clean'
