@@ -29,7 +29,7 @@ public class AuthenticationServiceController {
         userRepository.save(u);
         userRepository.addUserWithCredentialsIfNotExist(u.getId(), u.getUsername(), u.getPassword());
        
-        return "hello";
+        return "{\"status\":\"success\",\"error\":\"\"}";
     }   
     
 

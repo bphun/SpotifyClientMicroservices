@@ -35,7 +35,7 @@ public class AuthenticationFailureEntryPoint implements AuthenticationEntryPoint
     
         data.put("timestamp", Calendar.getInstance().getTime());
         data.put("error", authException.getLocalizedMessage());
-
+        
         response.getOutputStream().println(objectMapper.writeValueAsString(data));
     }
 

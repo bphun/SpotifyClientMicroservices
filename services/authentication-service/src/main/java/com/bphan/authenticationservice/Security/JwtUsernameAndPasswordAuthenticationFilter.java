@@ -39,7 +39,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		
 		try {
 			UserCredentials creds = new ObjectMapper().readValue(request.getInputStream(), UserCredentials.class);
 			
@@ -66,7 +65,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 			.setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))  // in milliseconds
 			.signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
 			.compact();
-		
+			
+		response.getWriter().write("{\"authentication\": \"" + token + "\"}");
 		response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
 	}
 	

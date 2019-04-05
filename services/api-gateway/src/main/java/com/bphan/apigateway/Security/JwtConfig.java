@@ -3,7 +3,7 @@ package com.bphan.apigateway.Security;
 import org.springframework.beans.factory.annotation.Value;
 
 public class JwtConfig {
-    @Value("${security.jwt.uri:/auth/**}")
+    @Value("${security.jwt.uri:/authentication/**}")
     private String Uri;
 
     @Value("${security.jwt.header:Authorization}")
