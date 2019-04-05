@@ -99,6 +99,15 @@ services:
         networks:
             - serviceNet
 
+    spotify-request-proxy-service:
+        build: ./services/spotify-request-proxy-service
+        image: bphun/spotify-client-images:spotify-request-proxy-service
+        ports:
+            - 8083:8083
+        container_name: spotify-request-proxy-service
+        networks: 
+            - serviceNet
+
     movie-info-service:
         build: ./services/movie-info-service
         image: bphun/spotify-client-images:movie-info-service
