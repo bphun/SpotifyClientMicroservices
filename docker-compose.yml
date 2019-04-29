@@ -11,30 +11,30 @@ services:
         networks: 
             - serviceNet
         depends_on: 
-            - config-service
+            # - config-service
             - service-discovery
             - api-gateway
             - authentication-service
-            - movie-info-service
-            - movie-catalog-service
-            - movie-rating-service
+            # - movie-info-service
+            # - movie-catalog-service
+            # - movie-rating-service
         links: 
-            - config-service
+            # - config-service
             - service-discovery
             - api-gateway
             - authentication-service
-            - movie-info-service
-            - movie-catalog-service
-            - movie-rating-service
+            # - movie-info-service
+            # - movie-catalog-service
+            # - movie-rating-service
 
-    config-service:
-        build: ./services/config-service
-        image: bphun/spotify-client-images:config-service
-        ports:
-            - 8888:8888
-        container_name: config-service
-        networks: 
-            - serviceNet 
+    # config-service:
+    #     build: ./services/config-service
+    #     image: bphun/spotify-client-images:config-service
+    #     ports:
+    #         - 8888:8888
+    #     container_name: config-service
+    #     networks: 
+    #         - serviceNet 
 
     service-discovery:
         build: ./services/service-discovery
@@ -42,15 +42,15 @@ services:
         ports: 
             - 8761:8761
         container_name: service-discovery
-        depends_on: 
-            - config-service
+        # depends_on: 
+            # - config-service
         environment: 
             - DOCKER_CONFIG_PROFILE=docker
         networks:
             - serviceNet
         restart: on-failure
-        links: 
-            - config-service
+        # links: 
+        #     - config-service
 
     api-gateway:
         build: ./services/api-gateway
@@ -60,14 +60,14 @@ services:
         container_name: api-gateway
         depends_on: 
             - service-discovery
-            - config-service
+            # - config-service
         environment: 
             - DOCKER_CONFIG_PROFILE=docker
         networks:
             - serviceNet
         restart: on-failure
         links: 
-            - config-service
+            # - config-service
             - service-discovery
 
     authentication-service:
@@ -80,13 +80,13 @@ services:
             - DOCKER_CONFIG_PROFILE=docker
         depends_on: 
             - service-discovery
-            - config-service
+            # - config-service
             - mysqldatabase
         networks:
             - serviceNet
         restart: on-failure
         links: 
-            - config-service
+            # - config-service
             - mysqldatabase
             - service-discovery
 
@@ -99,68 +99,68 @@ services:
         networks:
             - serviceNet
 
-    spotify-request-proxy-service:
-        build: ./services/spotify-request-proxy-service
-        image: bphun/spotify-client-images:spotify-request-proxy-service
-        ports:
-            - 8083:8083
-        container_name: spotify-request-proxy-service
-        networks: 
-            - serviceNet
+    # spotify-request-proxy-service:
+    #     build: ./services/spotify-request-proxy-service
+    #     image: bphun/spotify-client-images:spotify-request-proxy-service
+    #     ports:
+    #         - 8083:8083
+    #     container_name: spotify-request-proxy-service
+    #     networks: 
+    #         - serviceNet
 
-    movie-info-service:
-        build: ./services/movie-info-service
-        image: bphun/spotify-client-images:movie-info-service
-        ports:
-            - 8081:8081
-        container_name: movie-info-service
-        environment: 
-            - DOCKER_CONFIG_PROFILE=docker
-        depends_on: 
-            - service-discovery
-            - config-service
-        networks:
-            - serviceNet
-        restart: on-failure
-        links: 
-            - config-service
-            - service-discovery
+    # movie-info-service:
+    #     build: ./services/movie-info-service
+    #     image: bphun/spotify-client-images:movie-info-service
+    #     ports:
+    #         - 8081:8081
+    #     container_name: movie-info-service
+    #     environment: 
+    #         - DOCKER_CONFIG_PROFILE=docker
+    #     depends_on: 
+    #         - service-discovery
+    #         - config-service
+    #     networks:
+    #         - serviceNet
+    #     restart: on-failure
+    #     links: 
+    #         - config-service
+    #         - service-discovery
 
-    movie-rating-service:
-        build: ./services/movie-rating-service
-        image: bphun/spotify-client-images:movie-rating-service
-        ports:
-            - 8082:8082
-        container_name: movie-rating-service
-        environment: 
-            - DOCKER_CONFIG_PROFILE=docker
-        depends_on: 
-            - service-discovery
-            - config-service
-        networks:
-            - serviceNet
-        restart: on-failure
-        links: 
-            - config-service
-            - service-discovery
+    # movie-rating-service:
+    #     build: ./services/movie-rating-service
+    #     image: bphun/spotify-client-images:movie-rating-service
+    #     ports:
+    #         - 8082:8082
+    #     container_name: movie-rating-service
+    #     environment: 
+    #         - DOCKER_CONFIG_PROFILE=docker
+    #     depends_on: 
+    #         - service-discovery
+    #         - config-service
+    #     networks:
+    #         - serviceNet
+    #     restart: on-failure
+    #     links: 
+    #         - config-service
+    #         - service-discovery
 
-    movie-catalog-service:
-        build: ./services/movie-catalog-service
-        image: bphun/spotify-client-images:movie-catalog-service
-        ports:
-            - 8080:8080
-        container_name: movie-catalog-service
-        environment: 
-            - DOCKER_CONFIG_PROFILE=docker
-        depends_on: 
-            - service-discovery
-            - config-service
-        networks:
-            - serviceNet
-        restart: on-failure
-        links: 
-            - config-service
-            - service-discovery
+    # movie-catalog-service:
+    #     build: ./services/movie-catalog-service
+    #     image: bphun/spotify-client-images:movie-catalog-service
+    #     ports:
+    #         - 8080:8080
+    #     container_name: movie-catalog-service
+    #     environment: 
+    #         - DOCKER_CONFIG_PROFILE=docker
+    #     depends_on: 
+    #         - service-discovery
+    #         - config-service
+    #     networks:
+    #         - serviceNet
+    #     restart: on-failure
+    #     links: 
+    #         - config-service
+    #         - service-discovery
 
 networks:
     serviceNet:

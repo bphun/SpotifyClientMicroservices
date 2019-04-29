@@ -65,7 +65,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 			.setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))  // in milliseconds
 			.signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
 			.compact();
-			
+		
+		System.out.println("Authentication Success");
+		// response.setHeader("Access-Control-Allow-Origin", "*");
 		response.getWriter().write("{\"authentication\": \"" + token + "\"}");
 		response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
 	}
